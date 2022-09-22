@@ -2,6 +2,8 @@ import { Word } from "src/types/word";
 import create from "zustand";
 import { persist } from "zustand/middleware";
 
+const KEY = process.env.API_KEY || "";
+
 interface WordleStore {
   word: string;
   currentIndex: number;
@@ -33,7 +35,7 @@ const usePersistedWordleStore = create<PersistedWordleStore>()(
 const useWordleStore = create<WordleStore>((set, get) => ({
   init: async () => {
     const word = await fetch("/api/word", {
-      headers: { "x-api-key": process.env.API_KEY || "" },
+      headers: { "x-api-key": KEY },
     })
       .then((res) => res.json())
       .then((res: Word) => res.word);

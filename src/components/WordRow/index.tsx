@@ -25,14 +25,17 @@ const WordRow = ({
 
   return (
     <div className="flex gap-2">
-      {[...new Array(5)].map((_, i) => (
-        <Char
-          char={userInput[i]}
-          valid={validate}
-          status={checkStatus(i)}
-          key={`row-${rowIndex}-letter-${i}`}
-        />
-      ))}
+      {[...new Array(5)].map((_, i) => {
+        const status = checkStatus(i);
+        return (
+          <Char
+            char={userInput[i]}
+            valid={validate}
+            status={status}
+            key={`row-${rowIndex}-letter-${i}`}
+          />
+        );
+      })}
     </div>
   );
 };
