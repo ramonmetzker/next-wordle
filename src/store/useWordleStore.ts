@@ -185,7 +185,7 @@ const useWordleStore = create<WordleStore>((set, get) => ({
       });
       text += `\n`;
     });
-    return text + `\nTry it too! http://localhost:3000`;
+    return text + `\nTry it too! ${process.env.APP_URL}`;
   },
   word: "",
   guesses: [],

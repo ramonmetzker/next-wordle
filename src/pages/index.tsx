@@ -8,6 +8,7 @@ import Keyboard from "@components/Keyboard";
 import Header from "@components/Header";
 import Wrapper from "@components/Wrapper";
 import useWordleConfigStore from "src/store/useWordleConfigStore";
+import Head from "next/head";
 
 const Tutorial = dynamic(() => import("../components/TutorialDialog"));
 const Final = dynamic(() => import("../components/FinalDialog"));
@@ -23,6 +24,14 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>NextWordle</title>
+        <meta
+          name="description"
+          content="A fullstack Next.js clone of the famous Wordle from The New York Times"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <Header />
       <Wrapper>
         <Board

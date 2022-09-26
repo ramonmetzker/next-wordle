@@ -13,7 +13,6 @@ const WordRow = ({
   rowIndex,
 }: WordRowProps) => {
   const { validations } = useWordleStore();
-  console.log(rowIndex);
 
   return (
     <div className="flex gap-2">

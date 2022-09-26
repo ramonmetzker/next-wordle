@@ -3,7 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   env: {
-    "API_KEY": process.env.API_KEY
+    "API_KEY": process.env.API_KEY,
+    "APP_URL": process.env.APP_URL,
   }
 }
 
