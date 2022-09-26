@@ -2,18 +2,12 @@ import { useEffect } from "react";
 import WordRow from "../WordRow";
 
 type BoardProps = {
-  word: string;
   boardState: string[];
   currentIndex: number;
   handleKeyboard: (e: KeyboardEvent) => void;
 };
 
-const Board = ({
-  boardState,
-  currentIndex,
-  handleKeyboard,
-  word,
-}: BoardProps) => {
+const Board = ({ boardState, currentIndex, handleKeyboard }: BoardProps) => {
   useEffect(() => {
     window.addEventListener("keyup", handleKeyboard);
 
@@ -27,9 +21,8 @@ const Board = ({
     <div className="flex flex-col gap-2">
       {boardState.map((row, i) => (
         <WordRow
-          word={word}
           userInput={row}
-          rowIndex={currentIndex}
+          rowIndex={i}
           validate={i < currentIndex}
           key={`wordle-row-${currentIndex + i}`}
         />

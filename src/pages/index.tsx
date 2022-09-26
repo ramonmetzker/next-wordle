@@ -2,10 +2,19 @@ import type { NextPage } from "next";
 import Board from "@components/Board";
 import useWordleStore from "src/store/useWordleStore";
 import { useEffect } from "react";
+import dynamic from "next/dynamic";
+import KeyboardWidget from "@components/KeyboardWidget";
+import Keyboard from "@components/Keyboard";
+import Header from "@components/Header";
+import Wrapper from "@components/Wrapper";
+import useWordleConfigStore from "src/store/useWordleConfigStore";
+
+const Tutorial = dynamic(() => import("../components/TutorialDialog"));
+const Final = dynamic(() => import("../components/FinalDialog"));
 
 const Home: NextPage = () => {
-  const { currentIndex, word, guesses, handleKeyboard, error, init } =
-    useWordleStore();
+  const { currentIndex, guesses, handleKeyboard, init } = useWordleStore();
+  const { keyboard } = useWordleConfigStore();
 
   useEffect(() => {
     init();
@@ -14,12 +23,18 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Board
-        word={word}
-        boardState={guesses}
-        currentIndex={currentIndex}
-        handleKeyboard={handleKeyboard}
-      />
+      <Header />
+      <Wrapper>
+        <Board
+          boardState={guesses}
+          currentIndex={currentIndex}
+          handleKeyboard={handleKeyboard}
+        />
+        {keyboard && <Keyboard />}
+        <KeyboardWidget />
+        <Tutorial />
+        <Final />
+      </Wrapper>
     </>
   );
 };
