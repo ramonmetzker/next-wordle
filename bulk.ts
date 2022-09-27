@@ -1,5 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
-const words = require("./data/words.json");
+import { PrismaClient } from "@prisma/client";
+import words from "./data/words.json";
 
 const prisma = new PrismaClient();
 
@@ -28,3 +28,5 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+
+export {};
