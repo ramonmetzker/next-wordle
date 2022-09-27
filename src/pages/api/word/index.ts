@@ -1,6 +1,5 @@
-import { readFileSync, writeFileSync } from "fs";
+import prisma from "src/db";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Word } from "src/types/word";
 
 const wordHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const key = req.headers["x-api-key"];
@@ -12,32 +11,29 @@ const wordHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const today = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
+  const today = `${new Date().getDate().toString().padStart(2, "0")}/${(
+    new Date().getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}/${new Date().getFullYear()}`;
 
-  const words: Word[] = JSON.parse(
-    readFileSync("data/words_db.json", { encoding: "utf-8" })
-  );
-
-  const word = words.find((word) => word.date === today);
+  const word = await prisma.word.findFirst({ where: { date: today } });
 
   if (word) {
     res.statusCode = 200;
     res.send({ word: word.word });
     res.end();
   } else {
-    const selectedWord = words[Math.trunc(Math.random() * words.length)];
-    const wordIndex = words.findIndex(
-      (word) => selectedWord.word === word.word
-    );
-    words[wordIndex] = { ...words[wordIndex], date: today };
-
-    writeFileSync(
-      "data/words_db.json",
-      Buffer.from(JSON.stringify(words), "utf-8")
-    );
+    const foundWord = await prisma.word.findFirst({
+      where: { NOT: { date: today } },
+    });
+    const word = await prisma.word.update({
+      where: { id: foundWord?.id },
+      data: { date: today },
+    });
 
     res.statusCode = 201;
-    res.send({ word: selectedWord.word });
+    res.send({ word: word.word });
     res.end();
   }
 };

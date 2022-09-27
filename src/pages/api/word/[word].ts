@@ -1,19 +1,13 @@
-import { readFileSync } from "fs";
+import prisma from "src/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const wordValidator = async (req: NextApiRequest, res: NextApiResponse) => {
   const word = req.query.word as string;
 
-  const words: string[] = JSON.parse(
-    readFileSync("data/words.json", { encoding: "utf-8" })
-  );
-
-  const isValid = words.find((storedWord) => word === storedWord)
-    ? true
-    : false;
+  const isValid = await prisma.word.findFirst({ where: { word } });
 
   res.statusCode = 200;
-  res.send({ word: word, valid: isValid });
+  res.send({ word: word, valid: isValid?.id ? true : false });
   res.end();
 };
 

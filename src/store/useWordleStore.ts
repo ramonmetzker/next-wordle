@@ -52,7 +52,11 @@ const useWordleStore = create<WordleStore>((set, get) => ({
       .then((res: Word) => res.word);
     const { lastIndex, boardState, lastDate, boardValidation } =
       usePersistedWordleStore.getState();
-    const today = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`;
+    const today = `${new Date().getDate().toString().padStart(2, "0")}/${(
+      new Date().getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}/${new Date().getFullYear()}`;
 
     if (boardState && today === lastDate) {
       set(() => ({
