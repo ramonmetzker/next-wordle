@@ -25,7 +25,7 @@ const FinalDialog = () => {
     >
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center">
-        <Dialog.Panel className="mx-auto max-w-lg w-full rounded bg-white p-4">
+        <Dialog.Panel className="mx-4 md:mx-auto max-w-lg w-full rounded bg-white p-4">
           <Dialog.Title
             className={
               won()

@@ -1,4 +1,4 @@
-import prisma from "src/db";
+import { prisma } from "src/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const wordValidator = async (req: NextApiRequest, res: NextApiResponse) => {

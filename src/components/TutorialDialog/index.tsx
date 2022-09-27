@@ -5,10 +5,13 @@ import useWordleConfigStore from "src/store/useWordleConfigStore";
 const TutorialDialog = () => {
   const { tutorial } = useWordleConfigStore();
   return (
-    <Dialog open={tutorial} onClose={() => {}}>
+    <Dialog
+      open={tutorial}
+      onClose={() => useWordleConfigStore.setState({ tutorial: false })}
+    >
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center">
-        <Dialog.Panel className="mx-auto max-w-lg w-full rounded bg-white p-4">
+        <Dialog.Panel className="mx-4 md:mx-auto max-w-lg w-full rounded bg-white p-4">
           <Dialog.Title className="text-md uppercase font-bold text-center">
             How to Play
           </Dialog.Title>

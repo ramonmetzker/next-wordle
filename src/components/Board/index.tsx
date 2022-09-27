@@ -18,7 +18,7 @@ const Board = ({ boardState, currentIndex, handleKeyboard }: BoardProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 md:translate-y-0 -translate-y-20">
       {boardState.map((row, i) => (
         <WordRow
           userInput={row}

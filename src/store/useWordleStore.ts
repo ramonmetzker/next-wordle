@@ -20,6 +20,7 @@ interface WordleStore {
   shareText: () => string;
   ended: boolean;
   showDialog: boolean;
+  reset: () => void;
 }
 
 interface PersistedWordleStore {
@@ -68,14 +69,22 @@ const useWordleStore = create<WordleStore>((set, get) => ({
       if (get().won() || get().lost())
         set(() => ({ ended: true, showDialog: true }));
     } else {
-      set(() => ({ word, guesses: new Array(6).fill(""), currentIndex: 0 }));
+      set(() => ({
+        word,
+        guesses: new Array(6).fill(""),
+        currentIndex: 0,
+      }));
       usePersistedWordleStore.setState({
         boardState: new Array(6).fill(""),
         lastDate: today,
         lastIndex: 0,
         boardValidation: [],
       });
+      get().reset();
     }
+  },
+  reset: () => {
+    useKeyboardStore.setState({ correct: "", absent: "", present: "" });
   },
   ended: false,
   showDialog: false,
@@ -94,6 +103,13 @@ const useWordleStore = create<WordleStore>((set, get) => ({
       if (word === get().word) {
         set(() => ({ validations }));
         usePersistedWordleStore.setState(() => ({ solution: get().word }));
+        word.split("").map((letter) => {
+          useKeyboardStore.setState((state) => ({
+            correct: state.correct.includes(letter)
+              ? state.correct
+              : state.correct + letter,
+          }));
+        });
       } else {
         const line = word.split("").map((letter, i) => {
           if (get().word[i] === letter) {

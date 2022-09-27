@@ -1,4 +1,4 @@
-import prisma from "src/db";
+import { prisma } from "src/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const wordHandler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -24,8 +24,13 @@ const wordHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.send({ word: word.word });
     res.end();
   } else {
+    const yesterday = `${(new Date().getDate() - 1)
+      .toString()
+      .padStart(2, "0")}/${(new Date().getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}/${new Date().getFullYear()}`;
     const foundWord = await prisma.word.findFirst({
-      where: { NOT: { date: today } },
+      where: { date: { not: yesterday } },
     });
     const word = await prisma.word.update({
       where: { id: foundWord?.id },

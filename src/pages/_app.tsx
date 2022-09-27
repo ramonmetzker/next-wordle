@@ -1,7 +1,5 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Header from "../components/Header";
-import Wrapper from "../components/Wrapper";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
